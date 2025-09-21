@@ -46,14 +46,17 @@ def test_select_data():
 
 def test_train_rf():
     """Test that train_rf returns correct types"""
-    # Create simple test data
+    # Create test data using normal distributions for realistic penguin measurements
+    np.random.seed(42)  # For reproducible tests
+    
     X = pd.DataFrame({
-        'bill_length_mm': [39.1, 39.5, 40.3, 38.9],
-        'bill_depth_mm': [18.7, 17.4, 18.0, 17.8],
-        'flipper_length_mm': [181, 186, 197, 180],
-        'body_mass_g': [3750, 3800, 4750, 3625]
+        'bill_length_mm': np.random.normal(50, 5, 100),
+        'bill_depth_mm': np.random.normal(20, 2, 100),
+        'flipper_length_mm': np.random.normal(200, 20, 100),
+        'body_mass_g': np.random.normal(4000, 1000, 100)
     })
-    y = pd.Series(['male', 'female', 'male', 'female'])
+    
+    y = pd.Series(np.random.choice(['male', 'female'], size=100, p=[0.5, 0.5]))
     
     clf, report, cm, classes = train_rf(X, y)
     
